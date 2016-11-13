@@ -16,6 +16,10 @@ heroku ps:scale web=1
 4 list running services
 heroku ps
 
-5. check site
+5. check the deployed site
 heroku open
+
+6. run tests
+heroku run python test.py -v
+
 ```

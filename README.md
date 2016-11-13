@@ -20,6 +20,9 @@ heroku ps
 heroku open
 
 6. run tests
-heroku run python test.py -v
+heroku run [python test.py -v] # run command 
+
+7. check logs
+heroku logs
 
 ```

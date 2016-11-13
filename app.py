@@ -53,10 +53,13 @@ def connect_db():
 @app.route('/')             # browser endpoint
 @login_required             # reciben por parametro funciones y sus parametros
 def home():                 # url_for
-    g.db = connect_db()
-    cur = g.db.execute('select * from posts')
-    posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
-    g.db.close()
+    try:
+        g.db = connect_db()
+        cur = g.db.execute('select * from posts')
+        posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
+        g.db.close()
+    except sqlite3.OperationalError:
+        flash('u have no db')
     return render_template('index.html', posts=posts)
 
 

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    <!-- view tab title goes here -->
+    No Name
+{% endblock %}
+
+{% block content %}
+
+    Welcome
+
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
+
+
+{% endblock %}
+
+{% block scripts %}
+    <!-- scripts goes here -->
+    <script type="application/javascript">
+        console.log("Hello World!")
+    </script>
+{% endblock %}
+
+
+{% block styles %}
+    <!-- styles goes here -->
+{% endblock %}
+
+

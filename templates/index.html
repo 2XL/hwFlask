@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    <!-- view tab title goes here -->
+    No Name
+{% endblock %}
+
+
+
+{% block content %}
+    <h1>Welcome to flask!</h1>
+    <br>
+    <p>
+        Click
+        <a href="/logout">to log out.</a>
+        {% for message in get_flashed_messages() %}
+            {{ message }}
+        {% endfor %}
+    </p>
+
+
+    <h2>Posts</h2>
+    {% for post in posts %}
+        <strong>Title: </strong> {{ post.title }}<br>
+        <strong>Post:</strong> {{ post.description }}<br>
+        <hr>
+    {% endfor %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+{% block scripts %}
+    <!-- scripts goes here -->
+    <script type="application/javascript">
+        console.log("Hello World!")
+    </script>
+{% endblock %}
+
+
+{% block styles %}
+    <!-- styles goes here -->
+{% endblock %}
+
+
+
+
+

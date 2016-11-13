@@ -1,33 +1,40 @@
 from flask import Flask
 from flask import flash
-from flask import g
 from flask import redirect
 from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
 
-
-
 from functools import wraps
-
-# import sqlite3
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+
 
 app = Flask(__name__)
 
 #############
-# DATABASES
+# CONFIGURATION
 
-app.database = "sample.db"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(app.database)
+import os
+# app.config.from_object('config.BaseConfig')
+# export APP_SETTINGS="config.DevelopmentConfig"
+if 'APP_SETTINGS' not in os.environ:
+    os.environ['APP_SETTINGS'] = "config.DevelopmentConfig"
+
+app.config.from_object(os.environ['APP_SETTINGS'])
+
+#############
+# DATABASES
 
 db = SQLAlchemy(app)  # register database to
 
 #############
 # VARIABLES
 
-app.secret_key = "secret"  # used for user session
+app.secret_key = "\x91\xe3\xf5c\xbc|]\x1f\x93\xabX\xa7S\x0f\xc7\xf1>\xaf" \
+             "}\xb05" \
+             "\x06'\xb5"
 
 
 #############
@@ -44,9 +51,14 @@ def login_required(f):
     return wrap
 
 #############
-# FUNCTIONS
+# EXTENSIONS
 
+
+bcrypt = Bcrypt(app)
 #
+
+#############
+# HELPERS
 # def connect_db():
 #     return sqlite3.connect(app.database)
 
@@ -55,17 +67,15 @@ def login_required(f):
 
 
 @app.route('/')             # browser endpoint
-@login_required             # reciben por parametro funciones y sus parametros
+@login_required             # receive function from parameter and their params
 def home():                 # url_for
     try:
-        g.db = connect_db()
-        cur = g.db.execute('select * from posts')
-        posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
-        g.db.close()
-        return render_template('index.html', posts=posts)
-    except sqlite3.OperationalError:
-        flash('u have no db')
-        return render_template('index.html')
+        pass
+        #return render_template('index.html', posts=posts)
+    except:
+        pass
+
+    return render_template('index.html')
 
 
 @app.route('/welcome')
@@ -86,6 +96,7 @@ def login():
             flash('you just log in')
             return redirect(url_for('home'))
     return render_template('login.html', error=error)
+
 
 @login_required
 @app.route('/logout')

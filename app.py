@@ -7,9 +7,12 @@ from flask import request
 from flask import session
 from flask import url_for
 
+
+
 from functools import wraps
 
-import sqlite3
+# import sqlite3
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
@@ -17,8 +20,9 @@ app = Flask(__name__)
 # DATABASES
 
 app.database = "sample.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(app.database)
 
-
+db = SQLAlchemy(app)  # register database to
 
 #############
 # VARIABLES
@@ -42,9 +46,9 @@ def login_required(f):
 #############
 # FUNCTIONS
 
-
-def connect_db():
-    return sqlite3.connect(app.database)
+#
+# def connect_db():
+#     return sqlite3.connect(app.database)
 
 #############
 # ENDPOINTS

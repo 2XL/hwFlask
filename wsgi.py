@@ -7,7 +7,7 @@ APP_MODULE = $MODULE_NAME:$VARIABLE_NAME
 gunicorn -b 0.0.0.0:<port> app
 """
 
-from app import app as application
+from project.main.app import app as application
 
 if __name__ == "__main__":
     application.run()

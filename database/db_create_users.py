@@ -1,5 +1,6 @@
-import app
 from models import *
+
+from project.main import app
 
 # create db and tables
 

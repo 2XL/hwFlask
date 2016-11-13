@@ -1,7 +1,25 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
-from app import db as database, bcrypt
+from project.main.app import db as database, bcrypt
+
+
+class User(database.Model):
+    __tablename__ = "users"
+    id =database.Column(database.Integer, primary_key=True)
+    name = database.Column(database.String, nullable=False)
+    email = database.Column(database.String, nullable=False)
+    password = database.Column(database.String, nullable=False)
+    posts = relationship("Post", backref="author")
+
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = bcrypt.generate_password_hash(password)
+
+    def __repr__(self):
+        return '<name {}'.format(self.name)
+
 
 
 class Post(database.Model):
@@ -23,20 +41,3 @@ class Post(database.Model):
         :return:
         """
         return '<title {}'.format(self.title)
-
-
-class User(database.Model):
-    __tablename__ = "users"
-    id =database.Column(database.Integer, primary_key=True)
-    name = database.Column(database.String, nullable=False)
-    email = database.Column(database.String, nullable=False)
-    password = database.Column(database.String, nullable=False)
-    posts = relationship("Post", backref="author")
-
-    def __init__(self, name, email, password):
-        self.name = name
-        self.email = email
-        self.password = bcrypt.generate_password_hash(password)
-
-    def __repr__(self):
-        return '<name {}'.format(self.name)

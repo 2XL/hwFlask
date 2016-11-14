@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
-from project.main.app import db as database, bcrypt
+from project.main import db as database, bcrypt
 
 
 class User(database.Model):
